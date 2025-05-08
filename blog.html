@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Writers Clinic Gambia</title>
+    <meta name="description" content="Read the latest articles, stories, and updates from Writers Clinic Gambia. Insights on writing, youth empowerment, and literary events.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/wc-logo.jpg" type="image/jpeg"> </head>
+<body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="assets/wc-logo.jpg" alt="Writers Clinic Gambia Logo"> </a>
+            </div>
+            <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="mentorship.html">Mentorship</a></li>
+                    <li><a href="blog.html" class="active">Blog</a></li>
+                    <li><a href="support.html">Support Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-nav-toggle" id="mobileNavToggle" aria-controls="mainNav" aria-expanded="false">
+                <span>☰</span>
+                <span class="sr-only">Menu</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="section page-header-section" style="padding-top: calc(var(--header-height) + var(--spacing-xl)); background-color: var(--secondary-color); color: var(--white);">
+            <div class="container text-center scroll-animate fade-in">
+                <h1 style="color: var(--white);">Our Blog</h1>
+                <p style="color: var(--neutral-light); font-size: 1.2rem;">News, Insights, and Stories from the Clinic</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div id="blogPostFull" class="blog-post-full" style="display: none;">
+                    </div>
+
+                <div id="blogGridContainer">
+                    <div id="blogGrid" class="blog-grid">
+                        <p>Loading posts...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div> 
+            <p>© <span id="currentYear"></span> Writers Clinic Gambia. All Rights Reserved. <br>Site by LexoGraphix Plus</p>
+        </div>
+    </footer>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      // Import Firestore functions and the service
+      import { 
+        getFirestore,
+        collection,                 
+        getDocs,                    
+        doc,                        
+        query,                      
+        where,                      
+        orderBy,                    
+        getDoc                      
+      } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+      
+      // Your web app's Firebase configuration (SAME AS IN admin.html)
+      const firebaseConfig = {
+        apiKey: "AIzaSyAfCersDpYRZU-CDYj_S9_jpie7FL_ZJSc", // Replace with your actual API key if different or store centrally
+        authDomain: "writers-clinic-gambia-cms.firebaseapp.com",
+        projectId: "writers-clinic-gambia-cms",
+        storageBucket: "writers-clinic-gambia-cms.appspot.com",
+        messagingSenderId: "989841890911",
+        appId: "1:989841890911:web:0f685b502414e283cc05ea"
+      };
+      
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+
+      // Make Firestore services and functions available to app.js via window
+      window.publicFirebaseApp = app;
+      window.publicFirestoreService = getFirestore(app);
+      window.publicFbCollection = collection;
+      window.publicFbGetDocs = getDocs;
+      window.publicFbDoc = doc;
+      window.publicFbQuery = query;
+      window.publicFbWhere = where;
+      window.publicFbOrderBy = orderBy;
+      window.publicFbGetDoc = getDoc;
+    </script>
+
+    <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+    <script src="js/app.js"></script>
+</body>
+</html>

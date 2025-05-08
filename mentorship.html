@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentorship Program - Writers Clinic Gambia</title>
+    <meta name="description" content="Join the Writers Clinic Gambia mentorship program as a mentor or mentee. Develop your writing skills with expert guidance.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="assets/wc-logo.jpg" alt="Writers Clinic Gambia Logo">
+                </a>
+            </div>
+            <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="mentorship.html" class="active">Mentorship</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="support.html">Support Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-nav-toggle" id="mobileNavToggle" aria-controls="mainNav" aria-expanded="false">
+                <span>☰</span>
+                <span class="sr-only">Menu</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="section page-header-section" style="padding-top: calc(var(--header-height) + var(--spacing-xl)); background-color: var(--secondary-color); color: var(--white);">
+            <div class="container text-center scroll-animate fade-in">
+                <h1 style="color: var(--white);">Our Mentorship Program</h1>
+                <p style="color: var(--neutral-light); font-size: 1.2rem;">Connecting Aspiring Writers with Experienced Mentors</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="scroll-animate slide-in-up">
+                    <h2>Program Overview</h2>
+                    <p>The Writers Clinic Gambia Mentorship Program is designed to provide personalized guidance and support to young, aspiring writers. We pair mentees with experienced authors, poets, journalists, and editors who can offer valuable insights, feedback, and encouragement. Our goal is to help young writers develop their craft, build confidence, and navigate their literary journey.</p>
+                    <h3>What to Expect:</h3>
+                    <ul>
+                        <li>One-on-one sessions with a dedicated mentor.</li>
+                        <li>Constructive feedback on your writing projects.</li>
+                        <li>Goal setting and action planning.</li>
+                        <li>Advice on publishing, competitions, and literary careers.</li>
+                        <li>Opportunities to network with other writers.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="apply" class="section section-bg-light">
+            <div class="container">
+                <h2 class="text-center scroll-animate fade-in">Apply for Mentorship</h2>
+                <div class="two-col-grid">
+                    <div class="mentorship-form-container scroll-animate slide-in-left">
+                        <h3>Become a Mentee</h3>
+                        <p>Are you a young writer in The Gambia looking to improve your skills and get guidance? Apply to be a mentee!</p>
+                        <form id="menteeApplicationForm" class="validate-form">
+                            <div class="form-group">
+                                <label for="menteeName">Full Name</label>
+                                <input type="text" id="menteeName" name="menteeName" required>
+                                <p class="error-message"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="menteeEmail">Email Address</label>
+                                <input type="email" id="menteeEmail" name="menteeEmail" required>
+                                <p class="error-message"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="menteeWritingSample">Tell us about your writing interests (e.g., poetry, fiction, journalism) and goals.</label>
+                                <textarea id="menteeWritingSample" name="menteeWritingSample" rows="5" required></textarea>
+                                <p class="error-message"></p>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Apply as Mentee</button>
+                        </form>
+                    </div>
+
+                    <div class="mentorship-form-container scroll-animate slide-in-right">
+                        <h3>Become a Mentor</h3>
+                        <p>Are you an experienced writer, editor, or literary professional passionate about nurturing new talent? We'd love to hear from you!</p>
+                        <form id="mentorApplicationForm" class="validate-form">
+                            <div class="form-group">
+                                <label for="mentorName">Full Name</label>
+                                <input type="text" id="mentorName" name="mentorName" required>
+                                <p class="error-message"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="mentorEmail">Email Address</label>
+                                <input type="email" id="mentorEmail" name="mentorEmail" required>
+                                <p class="error-message"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="mentorExperience">Briefly describe your writing/editorial experience and why you want to mentor.</label>
+                                <textarea id="mentorExperience" name="mentorExperience" rows="5" required></textarea>
+                                <p class="error-message"></p>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Apply as Mentor</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div> 
+            <p>© <span id="currentYear"></span> Writers Clinic Gambia. All Rights Reserved. <br>Site by LexoGraphix Plus</p>
+        </div>
+    </footer>
+    <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+    <script src="js/app.js"></script>
+</body>
+</html>

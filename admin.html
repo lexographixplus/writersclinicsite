@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Writers Clinic Gambia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.js"></script>
+    
+    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="icon" href="assets/wc-logo.jpg" type="image/jpeg">
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        /* Re-declaring variables from style.css for direct use and admin-specific overrides */
+        /* It's generally better to have one source of truth for variables, 
+           but for this self-contained example, we'll include them. */
+        :root {
+            --primary-color: #0D3B66; /* Deep Blue */
+            --accent-color: #F9A826; /* Warm Yellow/Orange */
+            --accent-color-rgb: 249, 168, 38; /* For RGBA box-shadow */
+            --secondary-color: #60A5FA; /* Lighter Blue */
+            --neutral-light: #F8F9FA; /* Very light gray */
+            --neutral-dark: #343A40; /* Dark gray for text */
+            --white: #FFFFFF;
+            --text-color: #333333;
+            --light-text-color: #555555;
+            --border-color: #DEE2E6; /* Existing border color */
+            --border-medium: #d1d5db; /* A slightly more visible border if needed */
+
+            --font-heading: 'Poppins', sans-serif;
+            --font-body: 'Open Sans', sans-serif;
+
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 0.85rem; /* Adjusted for slightly tighter admin UI */
+            --spacing-md: 1.25rem;/* Adjusted */
+            --spacing-lg: 1.75rem;/* Adjusted */
+            --spacing-xl: 2.5rem; /* Adjusted */
+
+            /* Admin Specific Variables */
+            --admin-bg: #f7f9fc; /* Slightly refined background */
+            --sidebar-bg: #ffffff;
+            --sidebar-width: 260px;
+            --header-height-admin: 70px;
+            --card-bg: #ffffff;
+            --shadow-light: 0 3px 6px rgba(0, 0, 0, 0.04); /* Softer shadow */
+            --shadow-medium: 0 6px 12px rgba(0, 0, 0, 0.07); /* Slightly stronger for hover/active */
+            --border-light: #e9ecef; /* Refined light border */
+            --primary-color-admin-text: var(--primary-color); 
+            --accent-color-admin: var(--accent-color); 
+            --text-color-admin: var(--text-color); 
+            --light-text-color-admin: var(--light-text-color);
+            --danger-color: #dc3545;
+            --danger-color-hover: #c82333;
+        }
+
+        /* Base Admin Styles */
+        body {
+            margin: 0;
+            font-family: var(--font-body);
+            background-color: var(--admin-bg);
+            color: var(--text-color-admin);
+            min-height: 100vh; 
+            font-size: 15px; /* Base font size for admin */
+        }
+        
+        body.login-active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing-md);
+        }
+        body:not(.login-active) {
+            display: block; 
+        }
+
+        /* Login Form Styles */
+        .admin-login-container {
+            width: 100%;
+            max-width: 400px; /* Slightly narrower */
+            padding: var(--spacing-md);
+        }
+
+        .admin-login-form {
+            background-color: var(--card-bg);
+            padding: var(--spacing-lg); 
+            border-radius: 8px; 
+            box-shadow: var(--shadow-medium); /* Use medium shadow for login card */
+        }
+        .admin-login-form h2 {
+            text-align: center;
+            margin-bottom: var(--spacing-lg); 
+            color: var(--primary-color-admin-text);
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 1.75rem;
+        }
+        .admin-login-form .logo-container {
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            margin-bottom: var(--spacing-md);
+        }
+        .admin-login-form .logo-container img {
+            max-width: 90px; /* Slightly smaller logo */
+            height: auto;
+        }
+
+        /* Admin Layout Styles */
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+            width: 100%; 
+        }
+
+        .admin-sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            padding: var(--spacing-md);
+            box-shadow: 3px 0 10px rgba(0,0,0,0.03); /* Refined shadow */
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 1000;
+            transition: width 0.3s ease; 
+            border-right: 1px solid var(--border-light);
+        }
+
+        .admin-sidebar .logo-container {
+            padding: var(--spacing-sm) 0;
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .admin-sidebar .logo-container img {
+            max-height: 45px; /* Slightly smaller logo */
+        }
+
+        .admin-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .admin-nav li a {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-sm) var(--spacing-md); 
+            color: var(--light-text-color-admin);
+            text-decoration: none;
+            border-radius: 6px; 
+            margin-bottom: var(--spacing-xs);
+            transition: background-color 0.2s ease, color 0.2s ease, border-left-color 0.2s ease;
+            font-weight: 500; 
+            font-size: 0.95rem;
+            border-left: 3px solid transparent; /* For active state */
+        }
+        .admin-nav li a:hover {
+            background-color: var(--accent-color-admin);
+            color: var(--primary-color-admin-text); 
+            border-left-color: var(--primary-color-admin-text);
+        }
+        .admin-nav li a.active {
+            background-color: var(--accent-color-admin);
+            color: var(--primary-color-admin-text);
+            font-weight: 600; /* Bolder font for active */
+            border-left-color: var(--primary-color-admin-text); /* Prominent active indicator */
+        }
+        .admin-nav li a .nav-icon {
+            margin-right: var(--spacing-sm);
+            width: 18px; /* Slightly smaller icons */
+            height: 18px;
+            stroke-width: 2.5px; 
+        }
+        .admin-nav .logout-link { /* This class was not on the ul, but the div wrapper */
+            margin-top: auto; 
+        }
+        .admin-nav .logout-link ul li a:hover,
+        .admin-nav .logout-link ul li a.active { /* Ensure logout hover matches other links */
+             background-color: var(--danger-color);
+             color: var(--white);
+             border-left-color: var(--danger-color-hover);
+        }
+
+
+        .admin-main-content-wrapper { 
+            flex-grow: 1;
+            margin-left: var(--sidebar-width); 
+            display: flex;
+            flex-direction: column; 
+            min-height: 100vh; 
+        }
+
+        .admin-header {
+            background-color: var(--white);
+            padding: 0 var(--spacing-lg);
+            height: var(--header-height-admin);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03); 
+            position: fixed;
+            top: 0;
+            left: var(--sidebar-width);
+            right: 0;
+            z-index: 999;
+            border-bottom: 1px solid var(--border-light); /* Subtle separation */
+        }
+        .admin-header h1 {
+            font-size: 1.5rem; /* Slightly smaller */
+            margin: 0;
+            color: var(--primary-color-admin-text);
+            font-family: var(--font-heading);
+            font-weight: 600;
+        }
+        .admin-header #adminUserEmail {
+            font-size: 0.9rem;
+        }
+
+        .admin-main-content {
+            flex-grow: 1; 
+            padding: var(--spacing-lg);
+            padding-top: calc(var(--header-height-admin) + var(--spacing-lg)); 
+        }
+        
+        .admin-section {
+            background-color: var(--card-bg);
+            padding: var(--spacing-lg);
+            border-radius: 8px; 
+            box-shadow: var(--shadow-light); /* Use light shadow */
+            margin-bottom: var(--spacing-lg);
+        }
+        .admin-section h2, .admin-section h3 {
+            color: var(--primary-color-admin-text);
+            font-family: var(--font-heading);
+            margin-top: 0;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+        .admin-section h2 { font-size: 1.4rem; }
+        .admin-section h3 { font-size: 1.2rem; }
+
+        /* Dashboard Stats Grid */
+        .dashboard-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); /* Slightly wider minmax */
+            gap: calc(var(--spacing-lg) * 1.2); /* Increased gap */
+            margin-top: var(--spacing-md);
+        }
+        .stat-card {
+            background-color: var(--white);
+            padding: var(--spacing-md); /* Adjusted padding */
+            border-radius: 8px;
+            box-shadow: var(--shadow-light);
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center;
+            border-left: 4px solid var(--accent-color-admin); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px); /* Slightly more lift */
+            box-shadow: var(--shadow-medium); /* Use medium shadow on hover */
+        }
+        .stat-card .stat-icon {
+            margin-bottom: var(--spacing-sm);
+            color: var(--accent-color-admin);
+            width: 32px; /* Adjusted size */
+            height: 32px;
+        }
+        .stat-card h3 { /* Title of the stat card */
+            font-size: 1rem; /* Adjusted size */
+            color: var(--light-text-color-admin);
+            margin-bottom: var(--spacing-xs);
+            font-family: var(--font-heading);
+            font-weight: 500;
+        }
+        .stat-card .stat-value {
+            font-size: 2rem; /* Adjusted size */
+            font-weight: 600;
+            font-family: var(--font-heading);
+            color: var(--primary-color-admin-text);
+        }
+
+        /* Content Table Styles */
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--spacing-md);
+            /* box-shadow: var(--shadow-light);  Removed as section has shadow */
+            border-radius: 8px; 
+            overflow: hidden; 
+            border: 1px solid var(--border-light); /* Add border around table */
+        }
+        .content-table th, .content-table td {
+            padding: var(--spacing-sm) var(--spacing-md); /* Adjusted padding */
+            border-bottom: 1px solid var(--border-light); 
+            text-align: left;
+            vertical-align: middle;
+            font-size: 0.9rem;
+        }
+        .content-table th {
+            background-color: #f8f9fc; /* Lighter header bg */
+            font-weight: 600;
+            font-family: var(--font-heading);
+            color: var(--primary-color-admin-text);
+            font-size: 0.85rem; /* Slightly smaller */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .content-table tbody tr:last-child td {
+            border-bottom: none; 
+        }
+        .content-table tbody tr:hover {
+            background-color: #fdfdfe; /* Very subtle hover */
+        }
+        .content-table .actions .btn {
+            margin-right: var(--spacing-xs);
+            padding: 0.35rem 0.7rem; /* Adjusted padding */
+            border-radius: 5px;
+            font-size: 0.85rem; /* Smaller buttons */
+        }
+        .content-table .actions .btn .feather { /* Ensure icons in buttons are sized well */
+            width: 14px;
+            height: 14px;
+            vertical-align: middle;
+        }
+
+        /* Status Badges for Table */
+        .content-table .status-badge {
+            padding: 0.3em 0.7em; 
+            border-radius: 12px; /* More pill-like */
+            font-size: 0.75em; 
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .content-table .status-draft {
+            background-color: #fff3cd; color: #664d03; 
+        }
+        .content-table .status-published {
+            background-color: #d1e7dd; color: #0f5132; 
+        }
+        .content-table .status-unknown { /* Added for completeness */
+            background-color: #e9ecef; color: #495057;
+        }
+
+
+        /* Form Element Styles (inputs, textarea, select) - General for Admin */
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 500;
+            color: var(--primary-color-admin-text);
+            font-size: 0.9rem;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group input[type="url"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--border-medium); /* Use medium border */
+            border-radius: 6px; /* Slightly more rounded */
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            background-color: var(--white);
+            color: var(--text-color-admin);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="password"]:focus,
+        .form-group input[type="url"]:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color-admin);
+            box-shadow: 0 0 0 3px rgba(var(--accent-color-rgb), 0.15); /* Softer focus shadow */
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        /* Error messages and invalid states would be handled by style.css or JS */
+
+        /* Post Editor Form Specifics */
+        .post-editor-form .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+        }
+        @media (min-width: 768px) {
+            .post-editor-form .form-grid {
+                grid-template-columns: repeat(2, 1fr); 
+            }
+            .post-editor-form .form-group-full {
+                grid-column: 1 / -1; 
+            }
+        }
+        
+        .editor-form-group { /* For Quill editor container */
+            display: flex;
+            flex-direction: column;
+        }
+
+        #quillEditorContainer { 
+            border: 1px solid var(--border-medium); /* Use medium border */
+            background-color: var(--white); 
+            border-radius: 6px; /* Match other inputs */
+            display: flex;
+            flex-direction: column;
+            min-height: 300px; 
+            max-height: 55vh; /* Adjusted max height */
+            overflow: hidden; /* Ensure no double scrollbars if not needed */
+        }
+        .ql-toolbar.ql-snow { /* Quill toolbar */
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            border-bottom: 1px solid var(--border-medium);
+            flex-shrink: 0; 
+            position: sticky; 
+            top: 0; /* Sticky within its container if parent has overflow */
+            background-color: #f8f9fa; /* Light bg for toolbar */
+            z-index: 1; 
+            padding: 6px 8px; /* Slightly tighter padding */
+        }
+        .ql-container.ql-snow { /* Quill content area */
+            flex-grow: 1; 
+            overflow-y: auto; 
+            min-height: 250px; 
+            font-family: var(--font-body);
+            font-size: 0.95rem; /* Match other inputs */
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            border: none; /* Remove default Quill border as container has it */
+        }
+        .ql-editor {
+            padding: var(--spacing-sm); /* Internal padding for text */
+        }
+
+
+        #featuredImagePreview {
+            max-width: 220px; /* Slightly larger preview */
+            max-height: 160px;
+            margin-top: var(--spacing-sm);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            display: none; 
+            object-fit: cover;
+            background-color: var(--neutral-light); /* BG for empty preview */
+        }
+
+        /* Filter Controls */
+        .filter-controls {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            align-items: center;
+            flex-wrap: wrap; 
+        }
+        .filter-controls select, .filter-controls input[type="text"] {
+            padding: 0.55rem 0.75rem; /* Consistent padding with other inputs */
+            border-radius: 6px;
+            border: 1px solid var(--border-medium);
+            font-size: 0.9rem; /* Slightly smaller for filters */
+            height: auto; /* Ensure height is not fixed by other global styles */
+        }
+        .filter-controls input[type="text"] {
+            flex-grow: 1; 
+            min-width: 200px; 
+        }
+
+        /* Admin Footer */
+        .admin-footer {
+            text-align: center;
+            padding: var(--spacing-md) var(--spacing-lg);
+            background-color: var(--white);
+            border-top: 1px solid var(--border-light);
+            margin-top: auto; 
+            font-size: 0.85rem; /* Smaller footer text */
+            color: var(--light-text-color-admin);
+        }
+
+        /* Button Styles (General Admin) */
+        .btn { /* Using .btn from style.css as base, can be overridden */
+            display: inline-flex; /* For aligning icon and text */
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-family: var(--font-heading);
+            font-weight: 500;
+            text-align: center;
+            border-radius: 6px; /* Consistent border-radius */
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+        }
+        .btn:hover {
+            transform: translateY(-1px); /* Subtle lift */
+        }
+        .btn .feather { /* Icon in button */
+            width: 16px;
+            height: 16px;
+            margin-right: var(--spacing-xs);
+        }
+        .btn.btn-sm { /* For table action buttons */
+             padding: 0.35rem 0.7rem;
+             font-size: 0.8rem;
+        }
+        .btn.btn-sm .feather {
+            width: 14px;
+            height: 14px;
+            margin-right: 0; /* No margin if icon only */
+        }
+
+
+        .btn-primary { /* From style.css, ensure it works well in admin */
+            background-color: var(--accent-color-admin);
+            color: var(--primary-color-admin-text);
+            border-color: var(--accent-color-admin);
+        }
+        .btn-primary:hover {
+            background-color: #e09115; /* Darker accent */
+            border-color: #e09115;
+            box-shadow: 0 2px 8px rgba(var(--accent-color-rgb), 0.2);
+        }
+        .btn-secondary { /* From style.css */
+            background-color: transparent;
+            color: var(--primary-color-admin-text);
+            border: 1px solid var(--border-medium); /* Use medium border */
+        }
+        .btn-secondary:hover {
+            background-color: var(--primary-color-admin-text);
+            color: var(--white);
+            border-color: var(--primary-color-admin-text);
+        }
+        .btn-danger { /* New class for delete buttons */
+            background-color: var(--danger-color);
+            color: var(--white);
+            border-color: var(--danger-color);
+        }
+        .btn-danger:hover {
+            background-color: var(--danger-color-hover);
+            border-color: var(--danger-color-hover);
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+        }
+
+
+        /* Utility Classes */
+        .hidden { display: none !important; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+    </style>
+</head>
+<body class="login-active"> 
+    <a href="#main-content-admin" class="skip-to-content sr-only">Skip to main content</a>
+
+    <div id="adminLoginContainer" class="admin-login-container">
+        <section id="adminLoginSection" class="admin-login-form">
+            <div class="logo-container">
+                <img src="assets/wc-logo.jpg" alt="Writers Clinic Gambia Logo">
+            </div>
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminEmail">Email</label>
+                    <input type="email" id="adminEmail" name="adminEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" name="adminPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+        </section>
+    </div>
+
+    <div id="adminDashboardLayout" class="admin-layout hidden">
+        <aside class="admin-sidebar">
+            <div class="logo-container">
+                <a href="index.html" title="Back to Main Site">
+                    <img src="assets/wc-logo.jpg" alt="Writers Clinic Gambia Logo">
+                </a>
+            </div>
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="#dashboard" id="navDashboard" class="active"><i data-feather="grid" class="nav-icon"></i> Dashboard</a></li>
+                    <li><a href="#posts" id="navPosts"><i data-feather="file-text" class="nav-icon"></i> Posts</a></li>
+                    <li><a href="#create-post" id="navCreatePost"><i data-feather="plus-square" class="nav-icon"></i> Create New Post</a></li>
+                    <li><a href="index.html" target="_blank"><i data-feather="external-link" class="nav-icon"></i> View Site</a></li>
+                </ul>
+            </nav>
+            <div class="admin-nav logout-link"> <ul><li><a href="#logout" id="logoutButton"><i data-feather="log-out" class="nav-icon"></i> Logout</a></li></ul>
+            </div>
+        </aside>
+
+        <div class="admin-main-content-wrapper">
+            <header class="admin-header">
+                <h1 id="adminPageTitle">Dashboard</h1>
+                <div>
+                    <span id="adminUserEmail" style="margin-right: var(--spacing-sm); color: var(--light-text-color-admin);"></span>
+                    </div>
+            </header>
+
+            <main id="main-content-admin" class="admin-main-content">
+                <section id="dashboardSection" class="admin-section">
+                    <h2>Dashboard Overview</h2>
+                    <p>Welcome to the Writers Clinic Gambia Admin Panel!</p>
+                    
+                    <div class="dashboard-stats-grid">
+                        <div class="stat-card">
+                            <i data-feather="file-text" class="stat-icon"></i>
+                            <h3>Total Posts</h3>
+                            <p class="stat-value" id="statTotalPosts">-</p>
+                        </div>
+                        <div class="stat-card">
+                             <i data-feather="check-circle" class="stat-icon"></i>
+                            <h3>Published</h3>
+                            <p class="stat-value" id="statPublishedPosts">-</p>
+                        </div>
+                         <div class="stat-card">
+                             <i data-feather="edit-3" class="stat-icon"></i>
+                            <h3>Drafts</h3>
+                            <p class="stat-value" id="statDraftPosts">-</p>
+                        </div>
+                         <div class="stat-card"> 
+                             <i data-feather="users" class="stat-icon"></i>
+                            <h3>Authors (Example)</h3>
+                            <p class="stat-value" id="statTotalAuthors">1</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="postsSection" class="admin-section hidden">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md); flex-wrap: wrap; gap: var(--spacing-sm);">
+                        <h2>Manage Blog Posts</h2>
+                        <button id="navigateToCreatePostBtn" class="btn btn-primary"><i data-feather="plus"></i> Add New Post</button>
+                    </div>
+                    <div class="filter-controls">
+                        <label for="filterPostStatus" class="sr-only">Filter by status:</label>
+                        <select id="filterPostStatus">
+                            <option value="all">All Posts</option>
+                            <option value="published">Published</option>
+                            <option value="draft">Draft</option>
+                        </select>
+                        <input type="text" id="searchPostsInput" placeholder="Search posts by title...">
+                    </div>
+                    <div id="blogManagementPanel">
+                        <table class="content-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
+                        <p id="noPostsMessage" class="hidden" style="text-align:center; padding: var(--spacing-md); color: var(--light-text-color-admin);">No posts found.</p>
+                    </div>
+                </section>
+
+                <section id="postEditorSection" class="admin-section hidden">
+                    <h2 id="postEditorTitle">Create New Post</h2>
+                    <form id="postEditorForm" class="post-editor-form">
+                        <input type="hidden" id="editPostId" value=""> 
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="postTitleInput">Title</label>
+                                <input type="text" id="postTitleInput" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="postAuthorInput">Author</label>
+                                <input type="text" id="postAuthorInput" value="Writers Clinic Admin" required> 
+                            </div>
+                             <div class="form-group">
+                                <label for="postSlugInput">Slug (URL Path - auto-generated if empty)</label>
+                                <input type="text" id="postSlugInput" placeholder="e.g., my-awesome-post">
+                            </div>
+                            <div class="form-group">
+                                <label for="postStatusSelect">Status</label>
+                                <select id="postStatusSelect">
+                                    <option value="draft">Draft</option>
+                                    <option value="published">Published</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-group-full">
+                                <label for="featuredImageUrlInput">Featured Image URL</label>
+                                <input type="url" id="featuredImageUrlInput" placeholder="https://example.com/image.jpg">
+                                <img id="featuredImagePreview" src="#" alt="Featured Image Preview">
+                            </div>
+
+                            <div class="form-group form-group-full editor-form-group">
+                                <label for="quillEditorContainer">Content</label> 
+                                <div id="quillEditorContainer"></div> 
+                            </div>
+                        </div>
+                        <div style="margin-top: var(--spacing-lg); text-align: right; display: flex; justify-content: flex-end; gap: var(--spacing-sm);">
+                            <button type="button" id="cancelEditBtn" class="btn btn-secondary hidden">Cancel</button>
+                            <button type="submit" id="savePostBtn" class="btn btn-primary">Save Post</button>
+                        </div>
+                    </form>
+                </section>
+            </main>
+
+            <footer class="admin-footer">
+                <p>&copy; <span id="currentYearAdmin"></span> Writers Clinic Gambia. Site made by LexoGraphix Plus.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      // Import Auth functions
+      import { 
+        getAuth, 
+        signInWithEmailAndPassword, 
+        signOut,                    
+        onAuthStateChanged          
+      } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+      // Import Firestore functions
+      import { 
+        getFirestore,
+        collection,                 
+        getDocs,                    
+        addDoc,                     
+        doc,                        
+        updateDoc,                  
+        deleteDoc,                  
+        query,                      
+        where,                      
+        orderBy,                    
+        serverTimestamp,            
+        getDoc                      
+      } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+      
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyAfCersDpYRZU-CDYj_S9_jpie7FL_ZJSc", // Replace with your actual API key if different or store centrally
+        authDomain: "writers-clinic-gambia-cms.firebaseapp.com",
+        projectId: "writers-clinic-gambia-cms",
+        storageBucket: "writers-clinic-gambia-cms.appspot.com", // Ensure this is correct
+        messagingSenderId: "989841890911",
+        appId: "1:989841890911:web:0f685b502414e283cc05ea"
+      };
+      
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+
+      // Make Firebase services and functions available to admin_app.js via window object
+      window.firebaseApp = app; // Main app instance
+      
+      // Auth service and functions
+      window.firebaseAuthService = getAuth(app); 
+      window.fbSignInWithEmailAndPassword = signInWithEmailAndPassword;
+      window.fbSignOut = signOut;
+      window.fbOnAuthStateChanged = onAuthStateChanged;
+
+      // Firestore service and functions
+      window.firebaseFirestoreService = getFirestore(app); 
+      window.fbCollection = collection;
+      window.fbGetDocs = getDocs;
+      window.fbAddDoc = addDoc;
+      window.fbDoc = doc;
+      window.fbUpdateDoc = updateDoc;
+      window.fbDeleteDoc = deleteDoc;
+      window.fbQuery = query;
+      window.fbWhere = where;
+      window.fbOrderBy = orderBy;
+      window.fbServerTimestamp = serverTimestamp; // For timestamps
+      window.fbGetDoc = getDoc; // For getting a single document
+    </script>
+
+    <script>
+        feather.replace(); // Initialize Feather Icons
+        // Set current year in footer
+        if(document.getElementById('currentYearAdmin')) {
+            document.getElementById('currentYearAdmin').textContent = new Date().getFullYear();
+        }
+    </script>
+    <script src="js/admin_app.js"></script> 
+</body>
+</html>

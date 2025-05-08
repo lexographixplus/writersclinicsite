@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Us - Writers Clinic Gambia</title>
+    <meta name="description" content="Help Writers Clinic Gambia empower young writers. Learn how you can contribute through donations, partnerships, or volunteering.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="assets/wc-logo.jpg" alt="Writers Clinic Gambia Logo">
+                </a>
+            </div>
+            <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="mentorship.html">Mentorship</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="support.html" class="active">Support Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-nav-toggle" id="mobileNavToggle" aria-controls="mainNav" aria-expanded="false">
+                <span>☰</span>
+                <span class="sr-only">Menu</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="section page-header-section" style="padding-top: calc(var(--header-height) + var(--spacing-xl)); background-color: var(--secondary-color); color: var(--white);">
+            <div class="container text-center scroll-animate fade-in">
+                <h1 style="color: var(--white);">Support Our Mission</h1>
+                <p style="color: var(--neutral-light); font-size: 1.2rem;">Your Contribution Makes a Difference</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="scroll-animate slide-in-up">
+                    <h2>Why Your Support Matters</h2>
+                    <p>Writers Clinic Gambia relies on the generosity of individuals, organizations, and partners like you to continue our work. Your support directly contributes to providing mentorship, organizing workshops, running competitions, and offering resources to young Gambian writers. Together, we can build a brighter literary future for The Gambia.</p>
+                </div>
+
+                <h2 class="mt-2 scroll-animate fade-in">Ways to Contribute</h2>
+                <div class="contribution-methods">
+                    <div class="contribution-method scroll-animate slide-in-up" style="animation-delay: 0.1s;">
+                        <h3>Donate Cash</h3>
+                        <p>Monetary donations, no matter the size, help us cover operational costs, provide stipends for materials, and fund our programs. You can make a one-time or recurring donation.</p>
+                        <p><em>(Details on how to donate, e.g., bank transfer, online payment link, would go here for a real site.)</em></p>
+                        <a href="contact.html?subject=Donation" class="btn btn-primary mt-1">Inquire About Donations</a>
+                    </div>
+                    <div class="contribution-method scroll-animate slide-in-up" style="animation-delay: 0.2s;">
+                        <h3>Offer Services or In-Kind Support</h3>
+                        <p>If you or your organization can offer services such as printing, venue space for workshops, graphic design, or IT support, these contributions are invaluable. We also welcome donations of books, stationery, and equipment.</p>
+                        <a href="contact.html?subject=In-Kind Support" class="btn btn-primary mt-1">Offer In-Kind Support</a>
+                    </div>
+                    <div class="contribution-method scroll-animate slide-in-up" style="animation-delay: 0.3s;">
+                        <h3>Volunteer Your Time</h3>
+                        <p>We are always looking for passionate individuals to volunteer as mentors, workshop facilitators, event organizers, or administrative support. Share your skills and make a direct impact.</p>
+                        <a href="mentorship.html#apply" class="btn btn-primary mt-1">Become a Mentor</a>
+                        <a href="contact.html?subject=Volunteering" class="btn btn-secondary mt-1" style="margin-left: 10px;">Other Volunteer Roles</a>
+                    </div>
+                     <div class="contribution-method scroll-animate slide-in-up" style="animation-delay: 0.4s;">
+                        <h3>Partnerships</h3>
+                        <p>We welcome collaborations with educational institutions, businesses, NGOs, and other organizations that share our vision. Let's work together to create lasting impact.</p>
+                        <a href="contact.html?subject=Partnership" class="btn btn-primary mt-1">Discuss Partnership</a>
+                    </div>
+                </div>
+                <div class="text-center mt-2 scroll-animate fade-in">
+                    <p>For any inquiries about supporting Writers Clinic Gambia, please don't hesitate to <a href="contact.html">contact us</a>.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div> 
+            <p>© <span id="currentYear"></span> Writers Clinic Gambia. All Rights Reserved. <br>Site by LexoGraphix Plus</p>
+        </div>
+    </footer>
+    <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+    <script src="js/app.js"></script>
+</body>
+</html>
