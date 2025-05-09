@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.js"></script>
     
-    <link rel="icon" href="assets/wc-logo.jpg" type="image/jpeg">
+    <link rel="icon" href="../assets/wc-logo.jpg" type="image/jpeg"> {/* UPDATED PATH */}
     <meta name="robots" content="noindex, nofollow">
     <style>
         /* Modern Admin Panel Styles */
@@ -207,7 +207,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: var(--shadow-soft); 
-            position: sticky; /* Changed from fixed for better flow */
+            position: sticky; 
             top: 0;
             z-index: 999;
             border-bottom: 1px solid var(--border-light);
@@ -337,10 +337,10 @@
             background-color: #fbfcfd; 
         }
         .content-table .actions {
-            text-align: right; /* Align action buttons to the right */
+            text-align: right; 
         }
         .content-table .actions .btn {
-            margin-left: var(--spacing-xs); /* Use margin-left for spacing when right-aligned */
+            margin-left: var(--spacing-xs); 
             margin-right: 0;
             padding: 0.3rem 0.6rem; 
             border-radius: var(--border-radius-sm);
@@ -361,7 +361,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             border: 1px solid transparent;
-            display: inline-block; /* Ensures proper padding and background */
+            display: inline-block; 
         }
         .content-table .status-draft { 
             background-color: #fff9e6; color: #b38600; border-color: #ffe7a3;
@@ -436,7 +436,6 @@
             flex-direction: column;
         }
 
-        /* Styles for the Quill editor container, dynamically created by JS */
         #quillEditorContainer { 
             border: 1px solid var(--border-color); 
             background-color: var(--white); 
@@ -606,7 +605,7 @@
     <div id="adminLoginContainer" class="admin-login-container">
         <section id="adminLoginSection" class="admin-login-form">
             <div class="logo-container">
-                <img src="assets/wc-logo.jpg" alt="Writers Clinic Gambia Logo">
+                <img src="../assets/wc-logo.jpg" alt="Writers Clinic Gambia Logo"> 
             </div>
             <h2>Admin Panel</h2>
             <form id="adminLoginForm">
@@ -626,8 +625,8 @@
     <div id="adminDashboardLayout" class="admin-layout hidden">
         <aside class="admin-sidebar">
             <div class="logo-container">
-                <a href="index.html" title="Back to Main Site">
-                    <img src="assets/wc-logo.jpg" alt="Writers Clinic Gambia Logo">
+                <a href="../index.html" title="Back to Main Site"> 
+                    <img src="../assets/wc-logo.jpg" alt="Writers Clinic Gambia Logo"> 
                 </a>
             </div>
             <nav class="admin-nav">
@@ -635,7 +634,7 @@
                     <li><a href="#dashboard" id="navDashboard" class="active"><i data-feather="home" class="nav-icon"></i> Dashboard</a></li>
                     <li><a href="#posts" id="navPosts"><i data-feather="file-text" class="nav-icon"></i> Posts</a></li>
                     <li><a href="#create-post" id="navCreatePost"><i data-feather="plus-circle" class="nav-icon"></i> Create New</a></li>
-                    <li><a href="index.html" target="_blank"><i data-feather="external-link" class="nav-icon"></i> View Site</a></li>
+                    <li><a href="../index.html" target="_blank"><i data-feather="external-link" class="nav-icon"></i> View Site</a></li> 
                 </ul>
             </nav>
             <div class="admin-nav logout-link"> 
@@ -835,6 +834,6 @@
             document.getElementById('currentYearAdmin').textContent = new Date().getFullYear();
         }
     </script>
-    <script src="js/admin_app.js"></script> 
+    <script src="../js/admin_app.js"></script> {/* UPDATED PATH */}
 </body>
 </html>
