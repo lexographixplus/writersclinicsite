@@ -623,6 +623,101 @@
     opacity: 1;
     transform: translateY(0) translateX(0);
   }
+
+  /* ... (your existing CSS rules) ... */
+
+/* Responsive Grid (2 columns for programs/team/blog on tablet+) */
+@media (min-width: 768px) {
+  .two-col-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+  .three-col-grid { /* For team members or other elements */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+  }
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr); /* Tablet: 2 columns */
+  }
+  .about-snippet .container, .contact-page .container { /* Example of 2-col layout for specific sections */
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+      align-items: center;
+  }
+  .contact-form-column { order: 1; }
+  .contact-info-column { order: 2; }
+  .about-snippet-text { order: 1; }
+  .about-snippet-image { order: 2; }
+
+  /* Contact page can have form on one side, info on other */
+  .contact-page-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr; /* Form takes more space */
+      gap: var(--spacing-xl);
+  }
+}
+
+@media (min-width: 992px) {
+  .blog-grid {
+    grid-template-columns: repeat(3, 1fr); /* Desktop: 3 columns */
+  }
+   .hero-content .tagline {
+     max-width: 70%; margin-left: auto; margin-right: auto; /* Make tagline a bit narrower on large screens */
+   }
+}
+
+/* Mobile Navigation Specifics & Homepage Fix */
+@media (max-width: 767.98px) {
+  .main-nav {
+    display: none; /* Hidden by default on mobile */
+    position: absolute;
+    top: calc(var(--header-height) + var(--spacing-sm) + 2px); /* Position below header */
+    left: 0;
+    width: 100%;
+    background-color: var(--white);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding-bottom: var(--spacing-sm);
+  }
+  .main-nav.active {
+    display: block; /* Show when active */
+  }
+  .main-nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+  .main-nav li {
+    margin: var(--spacing-sm) 0;
+  }
+  .mobile-nav-toggle {
+    display: block; /* Show hamburger icon */
+  }
+
+  /* Homepage: Add margin between button in about-snippet and the image below it on mobile */
+  .about-snippet .about-snippet-text {
+    margin-bottom: var(--spacing-md); /* Adjust spacing as needed */
+  }
+  /* If the above is too much, or if you want to specifically target the button */
+  /* .about-snippet .about-snippet-text .btn {
+       margin-bottom: var(--spacing-md);
+  } */
+
+  /* Ensure hero CTAs stack nicely and have some space */
+  .hero-ctas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+  .hero-ctas .btn {
+    width: 80%; /* Make buttons take more width on mobile */
+    max-width: 300px;
+  }
+}
+
+/* ... (rest of your CSS) ... */
   
   /* Responsive Grid (2 columns for programs/team/blog on tablet+) */
   @media (min-width: 768px) {

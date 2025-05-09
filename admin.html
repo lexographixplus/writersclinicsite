@@ -10,50 +10,51 @@
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.js"></script>
     
-    <link rel="stylesheet" href="css/style.css"> 
     <link rel="icon" href="assets/wc-logo.jpg" type="image/jpeg">
     <meta name="robots" content="noindex, nofollow">
     <style>
-        /* Re-declaring variables from style.css for direct use and admin-specific overrides */
-        /* It's generally better to have one source of truth for variables, 
-           but for this self-contained example, we'll include them. */
+        /* Modern Admin Panel Styles */
         :root {
             --primary-color: #0D3B66; /* Deep Blue */
             --accent-color: #F9A826; /* Warm Yellow/Orange */
             --accent-color-rgb: 249, 168, 38; /* For RGBA box-shadow */
             --secondary-color: #60A5FA; /* Lighter Blue */
             --neutral-light: #F8F9FA; /* Very light gray */
+            --neutral-medium: #E9ECEF; /* Light gray for borders/backgrounds */
             --neutral-dark: #343A40; /* Dark gray for text */
             --white: #FFFFFF;
             --text-color: #333333;
             --light-text-color: #555555;
-            --border-color: #DEE2E6; /* Existing border color */
-            --border-medium: #d1d5db; /* A slightly more visible border if needed */
+            --border-color: #DEE2E6; 
 
             --font-heading: 'Poppins', sans-serif;
             --font-body: 'Open Sans', sans-serif;
 
-            --spacing-xs: 0.5rem;
-            --spacing-sm: 0.85rem; /* Adjusted for slightly tighter admin UI */
-            --spacing-md: 1.25rem;/* Adjusted */
-            --spacing-lg: 1.75rem;/* Adjusted */
-            --spacing-xl: 2.5rem; /* Adjusted */
+            --spacing-xs: 0.4rem;
+            --spacing-sm: 0.8rem; 
+            --spacing-md: 1.2rem;
+            --spacing-lg: 1.6rem;
+            --spacing-xl: 2.4rem;
 
             /* Admin Specific Variables */
-            --admin-bg: #f7f9fc; /* Slightly refined background */
-            --sidebar-bg: #ffffff;
-            --sidebar-width: 260px;
-            --header-height-admin: 70px;
-            --card-bg: #ffffff;
-            --shadow-light: 0 3px 6px rgba(0, 0, 0, 0.04); /* Softer shadow */
-            --shadow-medium: 0 6px 12px rgba(0, 0, 0, 0.07); /* Slightly stronger for hover/active */
-            --border-light: #e9ecef; /* Refined light border */
+            --admin-bg: #f4f7fc; /* Softer background */
+            --sidebar-bg: var(--white);
+            --sidebar-width: 250px;
+            --header-height-admin: 65px;
+            --card-bg: var(--white);
+            --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.05); 
+            --shadow-medium: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --border-light: var(--neutral-medium);
             --primary-color-admin-text: var(--primary-color); 
             --accent-color-admin: var(--accent-color); 
             --text-color-admin: var(--text-color); 
             --light-text-color-admin: var(--light-text-color);
-            --danger-color: #dc3545;
-            --danger-color-hover: #c82333;
+            --danger-color: #e74c3c; /* More modern red */
+            --danger-color-hover: #c0392b;
+            --success-color: #2ecc71;
+            --success-color-hover: #27ae60;
+            --border-radius-sm: 4px;
+            --border-radius-md: 6px;
         }
 
         /* Base Admin Styles */
@@ -63,7 +64,9 @@
             background-color: var(--admin-bg);
             color: var(--text-color-admin);
             min-height: 100vh; 
-            font-size: 15px; /* Base font size for admin */
+            font-size: 14px; /* Base font size for admin */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         body.login-active {
@@ -71,6 +74,7 @@
             justify-content: center;
             align-items: center;
             padding: var(--spacing-md);
+            background-color: var(--primary-color); /* Darker background for login focus */
         }
         body:not(.login-active) {
             display: block; 
@@ -79,15 +83,14 @@
         /* Login Form Styles */
         .admin-login-container {
             width: 100%;
-            max-width: 400px; /* Slightly narrower */
-            padding: var(--spacing-md);
+            max-width: 380px;
         }
 
         .admin-login-form {
             background-color: var(--card-bg);
-            padding: var(--spacing-lg); 
-            border-radius: 8px; 
-            box-shadow: var(--shadow-medium); /* Use medium shadow for login card */
+            padding: var(--spacing-xl); 
+            border-radius: var(--border-radius-md); 
+            box-shadow: var(--shadow-medium);
         }
         .admin-login-form h2 {
             text-align: center;
@@ -95,7 +98,7 @@
             color: var(--primary-color-admin-text);
             font-family: var(--font-heading);
             font-weight: 600;
-            font-size: 1.75rem;
+            font-size: 1.6rem;
         }
         .admin-login-form .logo-container {
             display: flex; 
@@ -104,7 +107,7 @@
             margin-bottom: var(--spacing-md);
         }
         .admin-login-form .logo-container img {
-            max-width: 90px; /* Slightly smaller logo */
+            max-width: 80px; 
             height: auto;
         }
 
@@ -118,8 +121,8 @@
         .admin-sidebar {
             width: var(--sidebar-width);
             background-color: var(--sidebar-bg);
-            padding: var(--spacing-md);
-            box-shadow: 3px 0 10px rgba(0,0,0,0.03); /* Refined shadow */
+            padding: var(--spacing-md) var(--spacing-sm);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.03);
             display: flex;
             flex-direction: column;
             position: fixed;
@@ -138,7 +141,7 @@
             border-bottom: 1px solid var(--border-light);
         }
         .admin-sidebar .logo-container img {
-            max-height: 45px; /* Slightly smaller logo */
+            max-height: 40px; 
         }
 
         .admin-nav ul {
@@ -153,38 +156,38 @@
             padding: var(--spacing-sm) var(--spacing-md); 
             color: var(--light-text-color-admin);
             text-decoration: none;
-            border-radius: 6px; 
+            border-radius: var(--border-radius-sm); 
             margin-bottom: var(--spacing-xs);
             transition: background-color 0.2s ease, color 0.2s ease, border-left-color 0.2s ease;
             font-weight: 500; 
-            font-size: 0.95rem;
-            border-left: 3px solid transparent; /* For active state */
+            font-size: 0.9rem;
+            border-left: 3px solid transparent; 
         }
         .admin-nav li a:hover {
-            background-color: var(--accent-color-admin);
-            color: var(--primary-color-admin-text); 
-            border-left-color: var(--primary-color-admin-text);
+            background-color: rgba(var(--accent-color-rgb), 0.1);
+            color: var(--accent-color-admin); 
+            border-left-color: var(--accent-color-admin);
         }
         .admin-nav li a.active {
-            background-color: var(--accent-color-admin);
-            color: var(--primary-color-admin-text);
-            font-weight: 600; /* Bolder font for active */
-            border-left-color: var(--primary-color-admin-text); /* Prominent active indicator */
+            background-color: rgba(var(--accent-color-rgb), 0.15);
+            color: var(--accent-color-admin);
+            font-weight: 600; 
+            border-left-color: var(--accent-color-admin); 
         }
         .admin-nav li a .nav-icon {
             margin-right: var(--spacing-sm);
-            width: 18px; /* Slightly smaller icons */
-            height: 18px;
-            stroke-width: 2.5px; 
+            width: 16px; 
+            height: 16px;
+            stroke-width: 2.2px; 
         }
-        .admin-nav .logout-link { /* This class was not on the ul, but the div wrapper */
+        .admin-nav .logout-link {
             margin-top: auto; 
         }
         .admin-nav .logout-link ul li a:hover,
-        .admin-nav .logout-link ul li a.active { /* Ensure logout hover matches other links */
-             background-color: var(--danger-color);
-             color: var(--white);
-             border-left-color: var(--danger-color-hover);
+        .admin-nav .logout-link ul li a.active { 
+             background-color: rgba(220, 53, 69, 0.1); /* Use danger color with opacity */
+             color: var(--danger-color);
+             border-left-color: var(--danger-color);
         }
 
 
@@ -203,36 +206,34 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03); 
-            position: fixed;
+            box-shadow: var(--shadow-soft); 
+            position: sticky; /* Changed from fixed for better flow */
             top: 0;
-            left: var(--sidebar-width);
-            right: 0;
             z-index: 999;
-            border-bottom: 1px solid var(--border-light); /* Subtle separation */
+            border-bottom: 1px solid var(--border-light);
         }
         .admin-header h1 {
-            font-size: 1.5rem; /* Slightly smaller */
+            font-size: 1.3rem; 
             margin: 0;
             color: var(--primary-color-admin-text);
             font-family: var(--font-heading);
             font-weight: 600;
         }
         .admin-header #adminUserEmail {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            color: var(--light-text-color);
         }
 
         .admin-main-content {
             flex-grow: 1; 
             padding: var(--spacing-lg);
-            padding-top: calc(var(--header-height-admin) + var(--spacing-lg)); 
         }
         
         .admin-section {
             background-color: var(--card-bg);
             padding: var(--spacing-lg);
-            border-radius: 8px; 
-            box-shadow: var(--shadow-light); /* Use light shadow */
+            border-radius: var(--border-radius-md); 
+            box-shadow: var(--shadow-soft); 
             margin-bottom: var(--spacing-lg);
         }
         .admin-section h2, .admin-section h3 {
@@ -242,75 +243,90 @@
             font-weight: 600;
             margin-bottom: var(--spacing-md);
         }
-        .admin-section h2 { font-size: 1.4rem; }
-        .admin-section h3 { font-size: 1.2rem; }
+        .admin-section h2 { font-size: 1.3rem; }
+        .admin-section h3 { font-size: 1.1rem; }
 
         /* Dashboard Stats Grid */
         .dashboard-stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); /* Slightly wider minmax */
-            gap: calc(var(--spacing-lg) * 1.2); /* Increased gap */
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: var(--spacing-lg); 
             margin-top: var(--spacing-md);
         }
         .stat-card {
             background-color: var(--white);
-            padding: var(--spacing-md); /* Adjusted padding */
-            border-radius: 8px;
-            box-shadow: var(--shadow-light);
+            padding: var(--spacing-md); 
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-soft);
             display: flex;
-            flex-direction: column; 
             align-items: center; 
-            text-align: center;
             border-left: 4px solid var(--accent-color-admin); 
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .stat-card:hover {
-            transform: translateY(-4px); /* Slightly more lift */
-            box-shadow: var(--shadow-medium); /* Use medium shadow on hover */
+            transform: translateY(-3px); 
+            box-shadow: var(--shadow-medium); 
         }
         .stat-card .stat-icon {
-            margin-bottom: var(--spacing-sm);
+            margin-right: var(--spacing-md); 
             color: var(--accent-color-admin);
-            width: 32px; /* Adjusted size */
-            height: 32px;
+            background-color: rgba(var(--accent-color-rgb), 0.1);
+            border-radius: 50%;
+            padding: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px; 
+            height: 28px;
         }
-        .stat-card h3 { /* Title of the stat card */
-            font-size: 1rem; /* Adjusted size */
+         .stat-card .stat-icon svg { 
+            width: 20px;
+            height: 20px;
+        }
+
+        .stat-card .stat-info {
+            flex-grow: 1;
+        }
+        .stat-card h3 { 
+            font-size: 0.9rem; 
             color: var(--light-text-color-admin);
             margin-bottom: var(--spacing-xs);
-            font-family: var(--font-heading);
+            font-family: var(--font-body); 
             font-weight: 500;
         }
         .stat-card .stat-value {
-            font-size: 2rem; /* Adjusted size */
+            font-size: 1.8rem; 
             font-weight: 600;
             font-family: var(--font-heading);
             color: var(--primary-color-admin-text);
+            line-height: 1.1;
         }
 
         /* Content Table Styles */
+        .content-table-wrapper { 
+            overflow-x: auto;
+        }
         .content-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: var(--spacing-md);
-            /* box-shadow: var(--shadow-light);  Removed as section has shadow */
-            border-radius: 8px; 
+            border-radius: var(--border-radius-md); 
             overflow: hidden; 
-            border: 1px solid var(--border-light); /* Add border around table */
+            border: 1px solid var(--border-light); 
         }
         .content-table th, .content-table td {
-            padding: var(--spacing-sm) var(--spacing-md); /* Adjusted padding */
+            padding: var(--spacing-sm) var(--spacing-md); 
             border-bottom: 1px solid var(--border-light); 
             text-align: left;
             vertical-align: middle;
-            font-size: 0.9rem;
+            font-size: 0.88rem; 
         }
         .content-table th {
-            background-color: #f8f9fc; /* Lighter header bg */
+            background-color: var(--neutral-light); 
             font-weight: 600;
             font-family: var(--font-heading);
             color: var(--primary-color-admin-text);
-            font-size: 0.85rem; /* Slightly smaller */
+            font-size: 0.8rem; 
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -318,37 +334,43 @@
             border-bottom: none; 
         }
         .content-table tbody tr:hover {
-            background-color: #fdfdfe; /* Very subtle hover */
+            background-color: #fbfcfd; 
+        }
+        .content-table .actions {
+            text-align: right; /* Align action buttons to the right */
         }
         .content-table .actions .btn {
-            margin-right: var(--spacing-xs);
-            padding: 0.35rem 0.7rem; /* Adjusted padding */
-            border-radius: 5px;
-            font-size: 0.85rem; /* Smaller buttons */
+            margin-left: var(--spacing-xs); /* Use margin-left for spacing when right-aligned */
+            margin-right: 0;
+            padding: 0.3rem 0.6rem; 
+            border-radius: var(--border-radius-sm);
+            font-size: 0.8rem; 
         }
-        .content-table .actions .btn .feather { /* Ensure icons in buttons are sized well */
-            width: 14px;
-            height: 14px;
+        .content-table .actions .btn .feather { 
+            width: 13px;
+            height: 13px;
             vertical-align: middle;
         }
 
         /* Status Badges for Table */
         .content-table .status-badge {
-            padding: 0.3em 0.7em; 
-            border-radius: 12px; /* More pill-like */
+            padding: 0.25em 0.6em; 
+            border-radius: var(--border-radius-sm); 
             font-size: 0.75em; 
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            border: 1px solid transparent;
+            display: inline-block; /* Ensures proper padding and background */
         }
-        .content-table .status-draft {
-            background-color: #fff3cd; color: #664d03; 
+        .content-table .status-draft { 
+            background-color: #fff9e6; color: #b38600; border-color: #ffe7a3;
         }
-        .content-table .status-published {
-            background-color: #d1e7dd; color: #0f5132; 
+        .content-table .status-published { 
+            background-color: #e6f7ec; color: #1d8043; border-color: #a3d9b8;
         }
-        .content-table .status-unknown { /* Added for completeness */
-            background-color: #e9ecef; color: #495057;
+        .content-table .status-unknown { 
+            background-color: var(--neutral-medium); color: var(--light-text-color); border-color: var(--border-color);
         }
 
 
@@ -361,7 +383,7 @@
             margin-bottom: var(--spacing-xs);
             font-weight: 500;
             color: var(--primary-color-admin-text);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .form-group input[type="text"],
         .form-group input[type="email"],
@@ -371,10 +393,10 @@
         .form-group select {
             width: 100%;
             padding: var(--spacing-sm);
-            border: 1px solid var(--border-medium); /* Use medium border */
-            border-radius: 6px; /* Slightly more rounded */
+            border: 1px solid var(--border-color); 
+            border-radius: var(--border-radius-sm); 
             font-family: var(--font-body);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             background-color: var(--white);
             color: var(--text-color-admin);
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -387,14 +409,13 @@
         .form-group select:focus {
             outline: none;
             border-color: var(--accent-color-admin);
-            box-shadow: 0 0 0 3px rgba(var(--accent-color-rgb), 0.15); /* Softer focus shadow */
+            box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.1); 
         }
         .form-group textarea {
             min-height: 120px;
             resize: vertical;
         }
-        /* Error messages and invalid states would be handled by style.css or JS */
-
+        
         /* Post Editor Form Specifics */
         .post-editor-form .form-grid {
             display: grid;
@@ -410,56 +431,57 @@
             }
         }
         
-        .editor-form-group { /* For Quill editor container */
+        .editor-form-group { 
             display: flex;
             flex-direction: column;
         }
 
+        /* Styles for the Quill editor container, dynamically created by JS */
         #quillEditorContainer { 
-            border: 1px solid var(--border-medium); /* Use medium border */
+            border: 1px solid var(--border-color); 
             background-color: var(--white); 
-            border-radius: 6px; /* Match other inputs */
+            border-radius: var(--border-radius-sm); 
             display: flex;
             flex-direction: column;
-            min-height: 300px; 
-            max-height: 55vh; /* Adjusted max height */
-            overflow: hidden; /* Ensure no double scrollbars if not needed */
+            min-height: 280px; 
+            max-height: 50vh; 
+            overflow: hidden; 
         }
-        .ql-toolbar.ql-snow { /* Quill toolbar */
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
-            border-bottom: 1px solid var(--border-medium);
+        .ql-toolbar.ql-snow { 
+            border-top-left-radius: var(--border-radius-sm);
+            border-top-right-radius: var(--border-radius-sm);
+            border-bottom: 1px solid var(--border-color);
             flex-shrink: 0; 
             position: sticky; 
-            top: 0; /* Sticky within its container if parent has overflow */
-            background-color: #f8f9fa; /* Light bg for toolbar */
+            top: 0; 
+            background-color: var(--neutral-light); 
             z-index: 1; 
-            padding: 6px 8px; /* Slightly tighter padding */
+            padding: 6px 8px; 
         }
-        .ql-container.ql-snow { /* Quill content area */
+        .ql-container.ql-snow { 
             flex-grow: 1; 
             overflow-y: auto; 
-            min-height: 250px; 
+            min-height: 200px; 
             font-family: var(--font-body);
-            font-size: 0.95rem; /* Match other inputs */
-            border-bottom-left-radius: 6px;
-            border-bottom-right-radius: 6px;
-            border: none; /* Remove default Quill border as container has it */
+            font-size: 0.9rem; 
+            border-bottom-left-radius: var(--border-radius-sm);
+            border-bottom-right-radius: var(--border-radius-sm);
+            border: none; 
         }
         .ql-editor {
-            padding: var(--spacing-sm); /* Internal padding for text */
+            padding: var(--spacing-sm); 
         }
 
 
         #featuredImagePreview {
-            max-width: 220px; /* Slightly larger preview */
-            max-height: 160px;
+            max-width: 200px; 
+            max-height: 150px;
             margin-top: var(--spacing-sm);
             border: 1px solid var(--border-light);
-            border-radius: 6px;
+            border-radius: var(--border-radius-sm);
             display: none; 
             object-fit: cover;
-            background-color: var(--neutral-light); /* BG for empty preview */
+            background-color: var(--neutral-medium); 
         }
 
         /* Filter Controls */
@@ -471,83 +493,86 @@
             flex-wrap: wrap; 
         }
         .filter-controls select, .filter-controls input[type="text"] {
-            padding: 0.55rem 0.75rem; /* Consistent padding with other inputs */
-            border-radius: 6px;
-            border: 1px solid var(--border-medium);
-            font-size: 0.9rem; /* Slightly smaller for filters */
-            height: auto; /* Ensure height is not fixed by other global styles */
+            padding: 0.5rem 0.7rem; 
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--border-color);
+            font-size: 0.85rem; 
+            height: auto; 
         }
         .filter-controls input[type="text"] {
             flex-grow: 1; 
-            min-width: 200px; 
+            min-width: 180px; 
         }
 
         /* Admin Footer */
         .admin-footer {
             text-align: center;
             padding: var(--spacing-md) var(--spacing-lg);
-            background-color: var(--white);
+            background-color: transparent; 
             border-top: 1px solid var(--border-light);
             margin-top: auto; 
-            font-size: 0.85rem; /* Smaller footer text */
+            font-size: 0.8rem; 
             color: var(--light-text-color-admin);
         }
 
         /* Button Styles (General Admin) */
-        .btn { /* Using .btn from style.css as base, can be overridden */
-            display: inline-flex; /* For aligning icon and text */
+        .btn { 
+            display: inline-flex; 
             align-items: center;
             justify-content: center;
             padding: var(--spacing-sm) var(--spacing-md);
             font-family: var(--font-heading);
             font-weight: 500;
             text-align: center;
-            border-radius: 6px; /* Consistent border-radius */
+            border-radius: var(--border-radius-sm); 
             cursor: pointer;
-            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
             border: 1px solid transparent;
-            font-size: 0.9rem;
+            font-size: 0.88rem; 
         }
         .btn:hover {
-            transform: translateY(-1px); /* Subtle lift */
+            transform: translateY(-1px); 
         }
-        .btn .feather { /* Icon in button */
-            width: 16px;
-            height: 16px;
-            margin-right: var(--spacing-xs);
+        .btn .feather { 
+            width: 14px;
+            height: 14px;
+            margin-right: calc(var(--spacing-xs) + 2px); 
         }
-        .btn.btn-sm { /* For table action buttons */
-             padding: 0.35rem 0.7rem;
+         .btn.btn-icon-only .feather { 
+            margin-right: 0;
+        }
+        .btn.btn-sm { 
+             padding: 0.4rem 0.8rem; 
              font-size: 0.8rem;
         }
         .btn.btn-sm .feather {
-            width: 14px;
-            height: 14px;
-            margin-right: 0; /* No margin if icon only */
+            width: 13px;
+            height: 13px;
+            margin-right: var(--spacing-xs);
         }
 
 
-        .btn-primary { /* From style.css, ensure it works well in admin */
+        .btn-primary { 
             background-color: var(--accent-color-admin);
-            color: var(--primary-color-admin-text);
+            color: var(--primary-color-admin-text); 
             border-color: var(--accent-color-admin);
         }
         .btn-primary:hover {
-            background-color: #e09115; /* Darker accent */
+            background-color: #e09115; 
             border-color: #e09115;
-            box-shadow: 0 2px 8px rgba(var(--accent-color-rgb), 0.2);
+            box-shadow: 0 2px 6px rgba(var(--accent-color-rgb), 0.2);
         }
-        .btn-secondary { /* From style.css */
+        .btn-secondary { 
             background-color: transparent;
             color: var(--primary-color-admin-text);
-            border: 1px solid var(--border-medium); /* Use medium border */
+            border: 1px solid var(--border-color); 
         }
         .btn-secondary:hover {
-            background-color: var(--primary-color-admin-text);
-            color: var(--white);
+            background-color: var(--neutral-light); 
+            color: var(--primary-color-admin-text);
             border-color: var(--primary-color-admin-text);
         }
-        .btn-danger { /* New class for delete buttons */
+        .btn-danger { 
             background-color: var(--danger-color);
             color: var(--white);
             border-color: var(--danger-color);
@@ -555,7 +580,17 @@
         .btn-danger:hover {
             background-color: var(--danger-color-hover);
             border-color: var(--danger-color-hover);
-            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+            box-shadow: 0 2px 6px rgba(220, 53, 69, 0.2);
+        }
+        .btn-success {
+            background-color: var(--success-color);
+            color: var(--white);
+            border-color: var(--success-color);
+        }
+        .btn-success:hover {
+            background-color: var(--success-color-hover);
+            border-color: var(--success-color-hover);
+            box-shadow: 0 2px 6px rgba(46, 204, 113, 0.2);
         }
 
 
@@ -573,7 +608,7 @@
             <div class="logo-container">
                 <img src="assets/wc-logo.jpg" alt="Writers Clinic Gambia Logo">
             </div>
-            <h2>Admin Login</h2>
+            <h2>Admin Panel</h2>
             <form id="adminLoginForm">
                 <div class="form-group">
                     <label for="adminEmail">Email</label>
@@ -583,7 +618,7 @@
                     <label for="adminPassword">Password</label>
                     <input type="password" id="adminPassword" name="adminPassword" required>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding-top: 10px; padding-bottom: 10px; font-size: 0.95rem;">Login</button>
             </form>
         </section>
     </div>
@@ -597,13 +632,16 @@
             </div>
             <nav class="admin-nav">
                 <ul>
-                    <li><a href="#dashboard" id="navDashboard" class="active"><i data-feather="grid" class="nav-icon"></i> Dashboard</a></li>
+                    <li><a href="#dashboard" id="navDashboard" class="active"><i data-feather="home" class="nav-icon"></i> Dashboard</a></li>
                     <li><a href="#posts" id="navPosts"><i data-feather="file-text" class="nav-icon"></i> Posts</a></li>
-                    <li><a href="#create-post" id="navCreatePost"><i data-feather="plus-square" class="nav-icon"></i> Create New Post</a></li>
+                    <li><a href="#create-post" id="navCreatePost"><i data-feather="plus-circle" class="nav-icon"></i> Create New</a></li>
                     <li><a href="index.html" target="_blank"><i data-feather="external-link" class="nav-icon"></i> View Site</a></li>
                 </ul>
             </nav>
-            <div class="admin-nav logout-link"> <ul><li><a href="#logout" id="logoutButton"><i data-feather="log-out" class="nav-icon"></i> Logout</a></li></ul>
+            <div class="admin-nav logout-link"> 
+                <ul>
+                    <li><a href="#logout" id="logoutButton"><i data-feather="log-out" class="nav-icon"></i> Logout</a></li>
+                </ul>
             </div>
         </aside>
 
@@ -611,35 +649,39 @@
             <header class="admin-header">
                 <h1 id="adminPageTitle">Dashboard</h1>
                 <div>
-                    <span id="adminUserEmail" style="margin-right: var(--spacing-sm); color: var(--light-text-color-admin);"></span>
-                    </div>
+                    <span id="adminUserEmail">user@example.com</span>
+                </div>
             </header>
 
             <main id="main-content-admin" class="admin-main-content">
                 <section id="dashboardSection" class="admin-section">
-                    <h2>Dashboard Overview</h2>
-                    <p>Welcome to the Writers Clinic Gambia Admin Panel!</p>
-                    
-                    <div class="dashboard-stats-grid">
+                     <div class="dashboard-stats-grid">
                         <div class="stat-card">
-                            <i data-feather="file-text" class="stat-icon"></i>
-                            <h3>Total Posts</h3>
-                            <p class="stat-value" id="statTotalPosts">-</p>
+                            <div class="stat-icon"><i data-feather="file-text"></i></div>
+                            <div class="stat-info">
+                                <h3>Total Posts</h3>
+                                <p class="stat-value" id="statTotalPosts">-</p>
+                            </div>
                         </div>
                         <div class="stat-card">
-                             <i data-feather="check-circle" class="stat-icon"></i>
-                            <h3>Published</h3>
-                            <p class="stat-value" id="statPublishedPosts">-</p>
+                             <div class="stat-icon"><i data-feather="check-circle"></i></div>
+                             <div class="stat-info">
+                                <h3>Published</h3>
+                                <p class="stat-value" id="statPublishedPosts">-</p>
+                            </div>
                         </div>
                          <div class="stat-card">
-                             <i data-feather="edit-3" class="stat-icon"></i>
-                            <h3>Drafts</h3>
-                            <p class="stat-value" id="statDraftPosts">-</p>
+                            <div class="stat-icon"><i data-feather="edit-3" ></i></div>
+                             <div class="stat-info">
+                                <h3>Drafts</h3>
+                                <p class="stat-value" id="statDraftPosts">-</p>
+                            </div>
                         </div>
                          <div class="stat-card"> 
-                             <i data-feather="users" class="stat-icon"></i>
-                            <h3>Authors (Example)</h3>
-                            <p class="stat-value" id="statTotalAuthors">1</p>
+                             <div class="stat-icon"><i data-feather="users"></i></div>
+                             <div class="stat-info">
+                                <h3>Authors</h3>
+                                <p class="stat-value" id="statTotalAuthors">1</p> </div>
                         </div>
                     </div>
                 </section>
@@ -650,15 +692,14 @@
                         <button id="navigateToCreatePostBtn" class="btn btn-primary"><i data-feather="plus"></i> Add New Post</button>
                     </div>
                     <div class="filter-controls">
-                        <label for="filterPostStatus" class="sr-only">Filter by status:</label>
+                        <input type="text" id="searchPostsInput" placeholder="Search posts by title...">
                         <select id="filterPostStatus">
-                            <option value="all">All Posts</option>
+                            <option value="all">All Statuses</option>
                             <option value="published">Published</option>
                             <option value="draft">Draft</option>
                         </select>
-                        <input type="text" id="searchPostsInput" placeholder="Search posts by title...">
                     </div>
-                    <div id="blogManagementPanel">
+                    <div id="blogManagementPanel" class="content-table-wrapper">
                         <table class="content-table">
                             <thead>
                                 <tr>
@@ -666,13 +707,13 @@
                                     <th>Author</th>
                                     <th>Date</th>
                                     <th>Status</th>
-                                    <th>Actions</th>
+                                    <th style="text-align: right;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 </tbody>
                         </table>
-                        <p id="noPostsMessage" class="hidden" style="text-align:center; padding: var(--spacing-md); color: var(--light-text-color-admin);">No posts found.</p>
+                        <p id="noPostsMessage" class="hidden" style="text-align:center; padding: var(--spacing-lg); color: var(--light-text-color-admin);">No posts found. Try adjusting your filters or create a new post!</p>
                     </div>
                 </section>
 
@@ -690,8 +731,8 @@
                                 <input type="text" id="postAuthorInput" value="Writers Clinic Admin" required> 
                             </div>
                              <div class="form-group">
-                                <label for="postSlugInput">Slug (URL Path - auto-generated if empty)</label>
-                                <input type="text" id="postSlugInput" placeholder="e.g., my-awesome-post">
+                                <label for="postSlugInput">Slug (URL Path)</label>
+                                <input type="text" id="postSlugInput" placeholder="e.g., my-awesome-post (auto-generated if empty)">
                             </div>
                             <div class="form-group">
                                 <label for="postStatusSelect">Status</label>
@@ -701,26 +742,26 @@
                                 </select>
                             </div>
                             <div class="form-group form-group-full">
-                                <label for="featuredImageUrlInput">Featured Image URL</label>
+                                <label for="featuredImageUrlInput">Featured Image URL (Optional)</label>
                                 <input type="url" id="featuredImageUrlInput" placeholder="https://example.com/image.jpg">
                                 <img id="featuredImagePreview" src="#" alt="Featured Image Preview">
                             </div>
 
                             <div class="form-group form-group-full editor-form-group">
-                                <label for="quillEditorContainer">Content</label> 
-                                <div id="quillEditorContainer"></div> 
+                                <label>Content</label> <div id="quillEditorWrapper">
+                                    </div>
                             </div>
                         </div>
                         <div style="margin-top: var(--spacing-lg); text-align: right; display: flex; justify-content: flex-end; gap: var(--spacing-sm);">
                             <button type="button" id="cancelEditBtn" class="btn btn-secondary hidden">Cancel</button>
-                            <button type="submit" id="savePostBtn" class="btn btn-primary">Save Post</button>
+                            <button type="submit" id="savePostBtn" class="btn btn-success"><i data-feather="save"></i>Save Post</button>
                         </div>
                     </form>
                 </section>
             </main>
 
             <footer class="admin-footer">
-                <p>&copy; <span id="currentYearAdmin"></span> Writers Clinic Gambia. Site made by LexoGraphix Plus.</p>
+                <p>&copy; <span id="currentYearAdmin"></span> Writers Clinic Gambia. Admin Panel by LexoGraphix Plus.</p>
             </footer>
         </div>
     </div>
@@ -753,10 +794,10 @@
       
       // Your web app's Firebase configuration
       const firebaseConfig = {
-        apiKey: "AIzaSyAfCersDpYRZU-CDYj_S9_jpie7FL_ZJSc", // Replace with your actual API key if different or store centrally
+        apiKey: "AIzaSyAfCersDpYRZU-CDYj_S9_jpie7FL_ZJSc", // Replace with your actual API key
         authDomain: "writers-clinic-gambia-cms.firebaseapp.com",
         projectId: "writers-clinic-gambia-cms",
-        storageBucket: "writers-clinic-gambia-cms.appspot.com", // Ensure this is correct
+        storageBucket: "writers-clinic-gambia-cms.appspot.com", 
         messagingSenderId: "989841890911",
         appId: "1:989841890911:web:0f685b502414e283cc05ea"
       };
@@ -765,7 +806,7 @@
       const app = initializeApp(firebaseConfig);
 
       // Make Firebase services and functions available to admin_app.js via window object
-      window.firebaseApp = app; // Main app instance
+      window.firebaseApp = app; 
       
       // Auth service and functions
       window.firebaseAuthService = getAuth(app); 
@@ -784,13 +825,12 @@
       window.fbQuery = query;
       window.fbWhere = where;
       window.fbOrderBy = orderBy;
-      window.fbServerTimestamp = serverTimestamp; // For timestamps
-      window.fbGetDoc = getDoc; // For getting a single document
+      window.fbServerTimestamp = serverTimestamp; 
+      window.fbGetDoc = getDoc; 
     </script>
 
     <script>
         feather.replace(); // Initialize Feather Icons
-        // Set current year in footer
         if(document.getElementById('currentYearAdmin')) {
             document.getElementById('currentYearAdmin').textContent = new Date().getFullYear();
         }
